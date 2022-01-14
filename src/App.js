@@ -15,6 +15,7 @@ constructor(props) {
 handleChange = (event)  => {
   let typedCity = event.target.value;
   this.setState( {city:typedCity })
+  //console.log(typedCity);
 } 
 
 render() {
@@ -40,7 +41,7 @@ render() {
        Your City: <input type="text" name="yourcity" onChange ={this.handleChange} />
         <button>Search</button>
       </form>
-      <h2>here is the math for {this.state.city} </h2>
+      <h2>here is the map for {this.state.city} </h2>
     </div>
   );
   }
