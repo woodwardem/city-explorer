@@ -2,7 +2,7 @@
 import React from 'react';
 import './App.css';
 import axios from 'axios';
-import { Container } from 'react-bootstrap/Container';
+import  Container from 'react-bootstrap/Container';
 class App extends React.Component {
 
   constructor(props) {
@@ -22,7 +22,7 @@ class App extends React.Component {
   };
   getLocation = async (event) => {
     event.preventDefault();
-    const url = 'https://us1.locationiq.com/v1/search.php?key=${process.env.REACT_APP_LOCATIONIQ_KEY}&q=${this.state.city}&format=json';
+    const url = `https://us1.locationiq.com/v1/search.php?key=${process.env.REACT_APP_LOCATIONIQ_KEY}&q=${this.state.city}&format=json`;
     console.log('URL:', url)
     let response = await axios.get(url);
     console.log('Response:', response.data[0]);
