@@ -5,6 +5,7 @@ import axios from 'axios';
 import  Container from 'react-bootstrap/Container';
 import Image from 'react-bootstrap/Image';
 import Alert from 'react-bootstrap/Alert';
+import Weather from './weather';
 class App extends React.Component {
 
   constructor(props) {
@@ -14,6 +15,7 @@ class App extends React.Component {
     locationObj: {},
     showError: false,
     errorMessage: ""
+    weatherArr: {},
     };
   }
 
@@ -34,6 +36,7 @@ class App extends React.Component {
     this.setState({
       locationObj: response.data[0]
     });
+    this.getWeather();
   } catch(error) {
     this.setState({
       showError: true,
@@ -42,6 +45,24 @@ class App extends React.Component {
   }
 
   }
+getWeather = async () => {
+  const url = `http://localhost:3001/weather?lat=${this.state.locationObj.lat}&lon=${this.state.locationObj.lon}&searchQuery=${this.state.city}`
+  try {
+    let response = await axios.get(url);
+    console.log('weather response: ', response.data);
+    this.setState({
+      weatherArr: response.data
+    });
+  } catch(error) {
+this.setState({
+  showError: true,
+  errorMessage: error.response.status + ': ' + error.response.data.error
+})
+    }
+  }
+}
+
+
 
   render() {
     return (
@@ -60,6 +81,7 @@ class App extends React.Component {
             <h2>here is the map for {this.state.locationObj.display_name} </h2>
             <p>Lat/Lon: {this.state.locationObj.lat}, {this.state.locationObj.lon}</p>
             <Image className='image' src={`https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_LOCATIONIQ_KEY}&center=${this.state.locationObj.lat},${this.state.locationObj.lon}&zoom=12 `} alt={this.state.locationObj.display_name}/>
+            <Weather weather
             </Container>
   }
   {this.state.showError && 
@@ -70,6 +92,6 @@ class App extends React.Component {
     </div>
   );
       }
-  }
+  
 
 export default App;
