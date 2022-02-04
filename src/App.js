@@ -54,9 +54,10 @@ getWeather = async () => {
       weatherArr: response.data
     });
   } catch(error) {
+   // let errorResponse - await axios.get(url);
 this.setState({
   showError: true,
-  errorMessage: error.response.status + ': ' + error.response.data.error
+  errorMessage: 'something went wrong'
 })
     
   }
