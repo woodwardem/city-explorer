@@ -14,8 +14,8 @@ class App extends React.Component {
       city: '',
     locationObj: {},
     showError: false,
-    errorMessage: ""
-    weatherArr: {},
+    errorMessage: "",
+    weatherArr: []
     };
   }
 
@@ -58,7 +58,7 @@ this.setState({
   showError: true,
   errorMessage: error.response.status + ': ' + error.response.data.error
 })
-    }
+    
   }
 }
 
@@ -81,7 +81,7 @@ this.setState({
             <h2>here is the map for {this.state.locationObj.display_name} </h2>
             <p>Lat/Lon: {this.state.locationObj.lat}, {this.state.locationObj.lon}</p>
             <Image className='image' src={`https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_LOCATIONIQ_KEY}&center=${this.state.locationObj.lat},${this.state.locationObj.lon}&zoom=12 `} alt={this.state.locationObj.display_name}/>
-            <Weather weather
+            <Weather weatherArr={this.state.weatherArr}/>
             </Container>
   }
   {this.state.showError && 
@@ -91,7 +91,8 @@ this.setState({
 
     </div>
   );
+}
       }
   
-
+    
 export default App;
