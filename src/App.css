@@ -28,5 +28,10 @@
 }
 
 .forecast {
-  
+  background: lightskyblue;
+  border: 2px solid black;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  text-align: center;
+  margin-right: 5px;
 }
