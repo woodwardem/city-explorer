@@ -2,7 +2,7 @@
 import React from 'react';
 import './App.css';
 import axios from 'axios';
-import  Container from 'react-bootstrap/Container';
+import Container from 'react-bootstrap/Container';
 import Image from 'react-bootstrap/Image';
 import Alert from 'react-bootstrap/Alert';
 import Weather from './weather';
@@ -12,10 +12,10 @@ class App extends React.Component {
     super(props);
     this.state = {
       city: '',
-    locationObj: {},
-    showError: false,
-    errorMessage: "",
-    weatherArr: []
+      locationObj: {},
+      showError: false,
+      errorMessage: "",
+      weatherArr: []
     };
   }
 
@@ -31,37 +31,37 @@ class App extends React.Component {
     const url = `https://us1.locationiq.com/v1/search.php?key=${process.env.REACT_APP_LOCATIONIQ_KEY}&q=${this.state.city}&format=json`;
     console.log('URL:', url)
     try {
-    let response = await axios.get(url);
-    console.log('Response:', response.data[0]);
-    this.setState({
-      locationObj: response.data[0]
-    });
-    this.getWeather();
-  } catch(error) {
-    this.setState({
-      showError: true,
-      errorMessage: error.response.status + ': ' + error.response.data.error
-    })
-  }
+      let response = await axios.get(url);
+      console.log('Response:', response.data[0]);
+      this.setState({
+        locationObj: response.data[0]
+      });
+      this.getWeather();
+    } catch (error) {
+      this.setState({
+        showError: true,
+        errorMessage: error.response.status + ': ' + error.response.data.error
+      })
+    }
 
   }
-getWeather = async () => {
-  const url = `${process.env.REACT_APP_SERVER}/weather?lat=${this.state.locationObj.lat}&lon=${this.state.locationObj.lon}&searchQuery=${this.state.city}`
-  try {
-    let response = await axios.get(url);
-    console.log('weather response: ', response.data);
-    this.setState({
-      weatherArr: response.data
-    });
-  } catch(error) {
-   // let errorResponse - await axios.get(url);
-this.setState({
-  showError: true,
-  errorMessage: 'something went wrong'
-})
-    
+  getWeather = async () => {
+    const url = `${process.env.REACT_APP_SERVER}/weather?lat=${this.state.locationObj.lat}&lon=${this.state.locationObj.lon}&searchQuery=${this.state.city}`
+    try {
+      let response = await axios.get(url);
+      console.log('weather response: ', response.data);
+      this.setState({
+        weatherArr: response.data
+      });
+    } catch (error) {
+      // let errorResponse - await axios.get(url);
+      this.setState({
+        showError: true,
+        errorMessage: 'something went wrong'
+      })
+
+    }
   }
-}
 
 
 
@@ -71,7 +71,7 @@ this.setState({
         <header className="App-header">
           <h1>City Explorer</h1>
         </header>
-        <form className= 'form' onSubmit={this.getLocation}>
+        <form className='form' onSubmit={this.getLocation}>
 
           Your City: {" "}
           <input type="text" name="yourcity" onChange={this.handleChange} />
@@ -81,19 +81,19 @@ this.setState({
           <Container className='container'>
             <h2>here is the map for {this.state.locationObj.display_name} </h2>
             <p>Lat/Lon: {this.state.locationObj.lat}, {this.state.locationObj.lon}</p>
-            <Image className='image' src={`https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_LOCATIONIQ_KEY}&center=${this.state.locationObj.lat},${this.state.locationObj.lon}&zoom=12 `} alt={this.state.locationObj.display_name}/>
-            <Weather weatherArr={this.state.weatherArr}/>
-            </Container>
-  }
-  {this.state.showError && 
-  
-<Alert variant='danger'>{this.state.errorMessage}</Alert>
-  }
+            <Image className='image' src={`https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_LOCATIONIQ_KEY}&center=${this.state.locationObj.lat},${this.state.locationObj.lon}&zoom=12 `} alt={this.state.locationObj.display_name} />
+            <Weather weatherArr={this.state.weatherArr} />
+          </Container>
+        }
+        {this.state.showError &&
 
-    </div>
-  );
+          <Alert variant='danger'>{this.state.errorMessage}</Alert>
+        }
+
+      </div>
+    );
+  }
 }
-      }
-  
-    
+
+
 export default App;
