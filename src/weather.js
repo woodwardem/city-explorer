@@ -1,20 +1,15 @@
 import React from 'react';
 import { Card, Row, Col } from 'react-bootstrap';
-
+import WeatherDay from './weatherday.js';
 
 class Weather extends React.Component {
     render() {
         return (
             <Row md={3}>
-               { this.props.weatherArr.map((dayObj, idx) => (
-                <Col key={idx}>
-                    <Card className="forecast" style={{width: '18rem'}}>
+                {this.props.weatherArr.map((dayObj, idx) => (
+                    <WeatherDay dayObj = {dayObj} idx={idx}/>
 
-                        <Card.Body>Date: {dayObj.day}</Card.Body>
-                        <Card.Body>Forecast Description: {dayObj.description}</Card.Body>
-                    </Card>
-                </Col>
-))}
+                ))}
             </Row>
         )
     }
